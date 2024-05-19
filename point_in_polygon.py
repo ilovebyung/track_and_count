@@ -1,6 +1,18 @@
 from polygenerator import random_polygon
 import matplotlib.pyplot as plt
+import cv2
+import numpy as np
+from ultralytics import YOLO
+# pip install PyQt5
+%matplotlib qt
 
+model = YOLO("yolov8m.pt")
+image = cv2.imread('people.png')
+# Convert the image from BGR to RGB
+rgb_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# Run Detection
+results = model(image)[0]
 
 def is_inside(edges, xp, yp):
     cnt = 0
@@ -10,24 +22,18 @@ def is_inside(edges, xp, yp):
             cnt += 1
     return cnt%2 == 1
 
+polygon = [((0, 1250),(1000, 1080)),((1250, 1080),(1500, 0))]
 
-def onclick(event):
-    xp, yp = event.xdata, event.ydata
-    if is_inside(edges, xp, yp):
-        print("inside")
-        plt.plot(xp, yp, "go", markersize=5)
-    else:
-        print("outside")
-        plt.plot(xp, yp, "ro", markersize=5)
-    plt.gcf().canvas.draw()
+is_inside(polygon, 0,2000)
 
+# Draw the circle on the image
+center = (100,200)
+color = (0, 0, 255)
+image = cv2.circle(rgb_img, center, 10, color, 2)
 
-polygon = random_polygon(num_points=20)
-polygon.append(polygon[0])
-edges = list(zip(polygon, polygon[1:] + polygon[:1]))
-plt.figure(figsize=(10, 10))
-plt.gca().set_aspect("equal")
-xs, ys = zip(*polygon)
-plt.gcf().canvas.mpl_connect('button_press_event', onclick)
-plt.plot(xs, ys, "b-", linewidth=0.8)
-plt.show()
+plt.imshow(image, cmap='gray')
+
+# Draw the polygon (closed shape)
+# Define the polygon points
+pts = np.array([[[0, 1250], [1000, 1080], [1250, 1080], [1500, 0]]], dtype=np.int32)
+img = cv2.fillPoly(image, pts, color, 2)
