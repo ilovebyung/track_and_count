@@ -3,16 +3,17 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 from ultralytics import YOLO
+
 # pip install PyQt5
 %matplotlib qt
 
-model = YOLO("yolov8m.pt")
 image = cv2.imread('people.png')
-# Convert the image from BGR to RGB
-rgb_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-# Run Detection
-results = model(image)[0]
+polygon = np.array([
+    ([800, 910],    [1100, 10]),
+    ([1010, 910],   [1368, 10])
+], dtype=np.int32)  # Ensure data type is int32
 
 def is_inside(edges, xp, yp):
     cnt = 0
@@ -22,18 +23,18 @@ def is_inside(edges, xp, yp):
             cnt += 1
     return cnt%2 == 1
 
-polygon = [((0, 1250),(1000, 1080)),((1250, 1080),(1500, 0))]
+# detect a point inside
+is_inside(polygon, 1000,800)
+point = (1000,800)
+cv2.circle(rgb_image,point,2,color,thickness)
+plt.imshow(rgb_image)
 
-is_inside(polygon, 0,2000)
+# detect a point outside
+is_inside(polygon, 400,800)
+point = (400,800)
+cv2.circle(rgb_image,point,2,color,thickness)
+plt.imshow(rgb_image)
 
-# Draw the circle on the image
-center = (100,200)
-color = (0, 0, 255)
-image = cv2.circle(rgb_img, center, 10, color, 2)
-
-plt.imshow(image, cmap='gray')
-
-# Draw the polygon (closed shape)
 # Define the polygon points
 pts = np.array([[[0, 1250], [1000, 1080], [1250, 1080], [1500, 0]]], dtype=np.int32)
 img = cv2.fillPoly(image, pts, color, 2)
