@@ -7,7 +7,7 @@ from ultralytics import YOLO
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
 # Define output video filename
-output_filename = "webcam_output.mp4"
+output_filename = "output.mp4"
 
 # Open the webcam
 cap = cv2.VideoCapture(0)
@@ -22,7 +22,7 @@ out = cv2.VideoWriter(output_filename, fourcc, 20.0, (frame_width, frame_height)
 print("Recording started. Press 'q' to stop recording.")
 
 # Run Detection in image
-model = YOLO('yolov8s.pt')
+model = YOLO('yolov8m.pt')
 
 while True:
     # Read a frame from the webcam
