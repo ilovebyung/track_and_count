@@ -22,7 +22,10 @@ out = cv2.VideoWriter(output_filename, fourcc, 20.0, (frame_width, frame_height)
 print("Recording started. Press 'q' to stop recording.")
 
 # Run Detection in image
-model = YOLO('yolov8m.pt')
+model = YOLO('yolov8n.pt')
+
+# Load the exported ONNX model
+model = YOLO("yolov8n.onnx")
 
 while True:
     # Read a frame from the webcam
