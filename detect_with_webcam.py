@@ -1,31 +1,29 @@
 import cv2
-import matplotlib.pyplot as plt
-import numpy as np
 from ultralytics import YOLO
 
-# Define the codec for MP4 video (FourCC code)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+# # Define the codec for MP4 video (FourCC code)
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
-# Define output video filename
-output_filename = "output.mp4"
+# # Define output video filename
+# output_filename = "output.mp4"
 
 # Open the webcam
 cap = cv2.VideoCapture(0)
 
-# Get frame width and height
-frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+# # Get frame width and height
+# frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+# frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-# Define video writer object with desired frame size, codec, and FPS (Frames per Second)
-out = cv2.VideoWriter(output_filename, fourcc, 20.0, (frame_width, frame_height))
+# # Define video writer object with desired frame size, codec, and FPS (Frames per Second)
+# out = cv2.VideoWriter(output_filename, fourcc, 20.0, (frame_width, frame_height))
 
-print("Recording started. Press 'q' to stop recording.")
+# print("Recording started. Press 'q' to stop recording.")
 
 # Run Detection in image
 model = YOLO('yolov8n.pt')
 
 # Load the exported ONNX model
-model = YOLO("yolov8n.onnx")
+# model = YOLO("yolov8n.onnx")
 
 while True:
     # Read a frame from the webcam
@@ -51,8 +49,8 @@ while True:
     # Display the frame with bounding boxes
     cv2.imshow('YOLOv8 Object Detection', frame)
 
-    # Write the frame into the video writer
-    out.write(frame)
+    # # Write the frame into the video writer
+    # out.write(frame)
 
     # Break the loop if 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -60,8 +58,8 @@ while True:
 
 # Release the capture and video writer objects
 cap.release()
-out.release()
+# out.release()
 # Close all open windows
 cv2.destroyAllWindows()
 
-print("Recording stopped. Video saved as", output_filename)
+# print("Recording stopped. Video saved as", output_filename)
