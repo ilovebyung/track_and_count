@@ -9,13 +9,13 @@ rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 # initiate polygon zone with a numPy array of points
 polygon = np.array([
     [1100, 10],
-    [1368, 10],
+    [1300, 10],
     [1110, 910],
-    [820, 910]
+    [800, 910]
 ], dtype=np.int32)  # Ensure data type is int32
 
 isClosed = True
-color = (250,0,0)
+color = (0,0,250)
 thickness = 10
 poly_image = cv2.polylines(rgb_image, [polygon], True, color, thickness)
 
